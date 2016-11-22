@@ -12,7 +12,12 @@ int main(int argc, char ** argv)
 
 	GameManager::CreateSingleton();
 
-	SDL_Quit();
+	SDL_Delay(5000);
+
+	//SDL_Quit();
+
+
+
 
 	return 0;
 }
