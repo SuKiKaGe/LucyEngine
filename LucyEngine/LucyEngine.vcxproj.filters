@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Managers">
-      <UniqueIdentifier>{d2bc3a7e-044a-4f60-9858-4254161edf0b}</UniqueIdentifier>
+      <UniqueIdentifier>{eaef6b7d-bd77-4f2b-9df3-e0b3b5e32337}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -25,6 +25,12 @@
   <ItemGroup>
     <ClInclude Include="Singleton.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

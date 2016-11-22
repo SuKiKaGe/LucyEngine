@@ -4,6 +4,8 @@
 
 // For asserts
 #include <string>
+#include "Windows.h"
+#include "WinUser.h"
 
 /**
 Class Singleton

@@ -1,6 +1,7 @@
 // LucyEngine
 
 #include <SDL.h>
+#include "GameManager.h"
 
 int main(int argc, char ** argv)
 {
@@ -8,6 +9,8 @@ int main(int argc, char ** argv)
 
 	// game code eventually goes here
 	// Comentario de prueba de Xhyon
+
+	GameManager::CreateSingleton();
 
 	SDL_Quit();
 
