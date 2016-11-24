@@ -35,5 +35,17 @@
     <ClInclude Include="RenderManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentSprite.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
