@@ -37,15 +37,17 @@ private:
 	/**
 	Constructor
 	*/
-	ComponentSprite(void) : Component(void)
+	ComponentSprite( std::string spriteName ) :
+		Component()
 	{
 		cout << "Happy Image Loaded" << endl;
+		ResourcesManager.loadSprite(spriteName);
 	}
 
 	/**
 	Destructor
 	*/
-	~ComponentSprite(void) : Component(void)
+	~ComponentSprite(void)
 	{
 		cout << "Happy Image Destroyed" << endl;
 	}
