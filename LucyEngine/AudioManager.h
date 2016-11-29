@@ -1,5 +1,4 @@
 #pragma once
-
 #ifndef AUDIOMANAGER_H
 #define AUDIOMANAGER_H
 
@@ -7,221 +6,154 @@
 
 //Using SDL, SDL_image, SDL_ttf, SDL_mixer, standard IO, math, and strings
 #include <SDL.h>
+//#include <SDL_mixer.h>
 #include <stdio.h>
 #include <string>
-#include "AudioManager.h"
 
+//Starts up SDL and creates window
+bool init();
+
+//Loads media
+bool loadMedia();
+
+//Frees media and shuts down SDL
+void close();
+
+//The music that will be played
+Mix_Music *gMusic = NULL;
+
+//The sound effects that will be used
+Mix_Chunk *gScratch = NULL;
+Mix_Chunk *gHigh = NULL;
+Mix_Chunk *gMedium = NULL;
+Mix_Chunk *gLow = NULL;
+
+/**
+Class AudioManager
+Implements this class code
+*/
 class AudioManager : public Singleton <AudioManager>
 {
+	/**********************************************************************************************************************/
+	// ASSOCIATIONS
+	/**********************************************************************************************************************/
 
-	AudioManager::AudioManager()
+	// Lets the constructor access to class Singleton
+	friend class Singleton <RenderManager>;
+
+	/**********************************************************************************************************************/
+	// CONSTANTS
+	/**********************************************************************************************************************/
+
+	/**********************************************************************************************************************/
+	// TYPES
+	/**********************************************************************************************************************/
+
+	/**********************************************************************************************************************/
+	// METHODS
+	/**********************************************************************************************************************/
+
+private:
+
+	/**
+	Constructor
+	*/
+	AudioManager(void)
 	{
+		//AudioManager::CreateInstance();
 
-	}
+		//Initialization flag
+		bool success = true;
 
-	AudioManager::~AudioManager()
-	{
-		Clear();
-	}
-
-	void AudioManager::AddMusic(std::string filepath, std::string key)
-	{
-		if (music[key] != NULL)
+		//Initialize SDL
+		if (SDL_Init(SDL_INIT_AUDIO) < 0)
 		{
-			LOG_DEBUG("There is already a music with that key! Key: " << key);
-			return;
+			printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+			success = false;
 		}
-
-		Mix_Music* tempMusic = NULL;
-		tempMusic = Mix_LoadMUS(filepath.c_str());
-
-		if (tempMusic == NULL)
+		else
 		{
-			LOG_ERROR("Music couldn't be loaded! Key: " << key << " Error: " << SDL_GetError());
-			return;
-		}
-
-		LOG("Music loaded! Key: " << key);
-
-		music[key] = tempMusic;
-	}
-
-	void AudioManager::RemoveMusic(std::string key)
-	{
-		if (music[key] == NULL)
-		{
-			LOG_DEBUG("The music can't be removed because it doesn't exist! Key: " << key);
-			return;
-		}
-
-		Mix_FreeMusic(music[key]);
-		music[key] = NULL;
-	}
-
-	void AudioManager::PlayMusic(std::string key)
-	{
-		PlayMusic(key, -1);
-	}
-
-	void AudioManager::PlayMusic(std::string key, int loops)
-	{
-		if (music[key] == NULL)
-		{
-			LOG_ERROR("Music couldn't be played because it doesn't exist! Key: " << key);
-			return;
-		}
-
-		if (Mix_PlayMusic((music[key]), loops) != 0)
-		{
-			LOG_ERROR("Error while trying to play music! Key: " << key << " Mixer error: " << SDL_GetError());
-		}
-	}
-
-	void AudioManager::StopMusic()
-	{
-		Mix_HaltMusic();
-	}
-
-	void AudioManager::PauseMusic()
-	{
-		Mix_PauseMusic();
-	}
-
-	void AudioManager::ResumeMusic()
-	{
-		Mix_ResumeMusic();
-	}
-
-	void AudioManager::MusicVolume(int volume)
-	{
-		if (volume > 100)
-			volume = 100;
-		if (volume < 0)
-			volume = 0;
-
-		Mix_VolumeMusic((MIX_MAX_VOLUME / 100) * volume);
-	}
-
-	void AudioManager::AddSoundEffect(std::string filepath, std::string key)
-	{
-		if (soundEffect[key] != NULL)
-		{
-			LOG_DEBUG("There is already a soundEffect with that key! Key: " << key);
-			return;
-		}
-
-		Mix_Chunk* tempEffect = NULL;
-		tempEffect = Mix_LoadWAV(filepath.c_str());
-
-		if (tempEffect == NULL)
-		{
-			LOG_ERROR("SoundEffect couldn't be loaded! Key: " << key << " Error: " << SDL_GetError());
-			return;
-		}
-
-		soundEffect[key] = tempEffect;
-	}
-
-	void AudioManager::RemoveSoundEffect(std::string key)
-	{
-		if (soundEffect[key] == NULL)
-		{
-			LOG_DEBUG("The SoundEffect can't be removed because it doesn't exist! Key: " << key);
-			return;
-		}
-
-		Mix_FreeChunk(soundEffect[key]);
-		soundEffect[key] = NULL;
-	}
-
-	void AudioManager::PlaySoundEffect(std::string key)
-	{
-		PlaySoundEffect(key, 0);
-	}
-
-	void AudioManager::PlaySoundEffect(std::string key, int loops)
-	{
-		if (soundEffect[key] == NULL)
-		{
-			LOG_ERROR("SoundEffect couldn't be played because it doesn't exist! Key: " << key);
-			return;
-		}
-
-		Mix_PlayChannel(-1, soundEffect[key], loops);
-	}
-
-	void AudioManager::SoundEffectVolume(std::string key, int volume)
-	{
-		if (volume > 100)
-			volume = 100;
-		if (volume < 0)
-			volume = 0;
-
-		if (soundEffect[key] == NULL)
-		{
-			LOG_DEBUG("SoundEffect's volume couldn't be changed because it doesn't exist! Key: " << key);
-			return;
-		}
-
-		Mix_VolumeChunk(soundEffect[key], (MIX_MAX_VOLUME / 100) * volume);
-	}
-
-	void AudioManager::SoundEffectsVolume(int volume)
-	{
-		if (volume > 100)
-			volume = 100;
-		if (volume < 0)
-			volume = 0;
-
-		Mix_Volume(-1, (MIX_MAX_VOLUME / 100) * volume);
-	}
-
-	void AudioManager::Stop()
-	{
-		Mix_HaltChannel(-1);
-	}
-
-	void AudioManager::Pause()
-	{
-		Mix_Pause(-1);
-	}
-
-	void AudioManager::Resume()
-	{
-		Mix_Resume(-1);
-	}
-
-	void AudioManager::Clear()
-	{
-		Mix_HaltMusic();
-
-		if (!soundEffect.empty())
-			Mix_HaltChannel(-1);
-
-		for (auto iterator = music.begin(); iterator != music.end(); iterator++)
-		{
-			if (iterator->second != NULL)
+			//Initialize SDL_mixer
+			if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 			{
-				std::cout << "Destroyed music: " << iterator->first << std::endl;
-				Mix_FreeMusic(iterator->second);
-				iterator->second = NULL;
+				printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+				success = false;
 			}
 		}
 
-		music.clear();
-
-		for (auto iterator = soundEffect.begin(); iterator != soundEffect.end(); iterator++)
-		{
-			if (iterator->second != NULL)
-			{
-				std::cout << "Destroyed soundEffect: " << iterator->first << std::endl;
-				Mix_FreeChunk(iterator->second);
-				iterator->second = NULL;
-			}
-		}
-
-		soundEffect.clear();
+		//return success;
 	}
 
-}
+	/**
+	Destructor
+	*/
+	~AudioManager(void)
+	{
+		//Free the sound effects
+		Mix_FreeChunk(gScratch);
+		Mix_FreeChunk(gHigh);
+		Mix_FreeChunk(gMedium);
+		Mix_FreeChunk(gLow);
+		gScratch = NULL;
+		gHigh = NULL;
+		gMedium = NULL;
+		gLow = NULL;
+
+		//Free the music
+		Mix_FreeMusic(gMusic);
+		gMusic = NULL;
+
+		//Quit SDL subsystems
+		Mix_Quit();
+		IMG_Quit();
+		SDL_Quit();
+	}
+
+	bool loadMedia()
+	{
+		bool loadMedia()
+		{
+			//Loading success flag
+			bool success = true;
+
+			//Load music
+			gMusic = Mix_LoadMUS("21_sound_effects_and_music/beat.wav");
+			if (gMusic == NULL)
+			{
+				printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+				success = false;
+			}
+
+			//Load sound effects
+			gScratch = Mix_LoadWAV("21_sound_effects_and_music/scratch.wav");
+			if (gScratch == NULL)
+			{
+				printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+				success = false;
+			}
+
+			gHigh = Mix_LoadWAV("21_sound_effects_and_music/high.wav");
+			if (gHigh == NULL)
+			{
+				printf("Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+				success = false;
+			}
+
+			gMedium = Mix_LoadWAV("21_sound_effects_and_music/medium.wav");
+			if (gMedium == NULL)
+			{
+				printf("Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+				success = false;
+			}
+
+			gLow = Mix_LoadWAV("21_sound_effects_and_music/low.wav");
+			if (gLow == NULL)
+			{
+				printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+				success = false;
+			}
+
+			return success;
+	}
+};
 #endif

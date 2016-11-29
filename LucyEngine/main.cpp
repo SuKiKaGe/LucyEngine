@@ -13,9 +13,6 @@ int main(int argc, char ** argv)
 
 	GameManager::CreateSingleton();
 
-	AudioManager::AddMusic("backgroundAudio.mp3", "1");
-	AudioManager::PlayMusic("1");
-
 	SDL_Delay(5000);
 
 	//SDL_Quit();

@@ -39,6 +39,7 @@ private:
 	GameManager(void)
 	{
 		RenderManager::CreateSingleton();
+		AudioManager::CreateSingleton();
 	}
 
 	/**
@@ -50,5 +51,4 @@ private:
 	}
 
 };
-
 #endif
