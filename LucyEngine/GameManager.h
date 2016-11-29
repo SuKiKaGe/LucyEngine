@@ -38,6 +38,8 @@ private:
 	*/
 	GameManager(void)
 	{
+		SDL_Init(SDL_INIT_VIDEO);
+
 		RenderManager::CreateSingleton();
 		AudioManager::CreateSingleton();
 	}
@@ -47,7 +49,6 @@ private:
 	*/
 	~GameManager(void)
 	{
-
 	}
 
 };

@@ -53,7 +53,7 @@ class AudioManager : public Singleton <AudioManager>
 	// METHODS
 	/**********************************************************************************************************************/
 
-private:
+public:
 
 	/**
 	Constructor
@@ -105,55 +105,59 @@ private:
 
 		//Quit SDL subsystems
 		Mix_Quit();
-		IMG_Quit();
+		//IMG_Quit();
 		SDL_Quit();
 	}
 
 	bool loadMedia()
 	{
-		bool loadMedia()
+		//Loading success flag
+		bool success = true;
+
+		//Load music
+		gMusic = Mix_LoadMUS("21_sound_effects_and_music/beat.wav");
+		if (gMusic == NULL)
 		{
-			//Loading success flag
-			bool success = true;
+			printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+			success = false;
+		}
 
-			//Load music
-			gMusic = Mix_LoadMUS("21_sound_effects_and_music/beat.wav");
-			if (gMusic == NULL)
-			{
-				printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
-				success = false;
-			}
+		//Load sound effects
+		gScratch = Mix_LoadWAV("21_sound_effects_and_music/scratch.wav");
+		if (gScratch == NULL)
+		{
+			printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+			success = false;
+		}
 
-			//Load sound effects
-			gScratch = Mix_LoadWAV("21_sound_effects_and_music/scratch.wav");
-			if (gScratch == NULL)
-			{
-				printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-				success = false;
-			}
+		gHigh = Mix_LoadWAV("../scratch.wav");
+		if (gHigh == NULL)
+		{
+			printf("Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+			success = false;
+		}
 
-			gHigh = Mix_LoadWAV("21_sound_effects_and_music/high.wav");
-			if (gHigh == NULL)
-			{
-				printf("Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-				success = false;
-			}
+		gMedium = Mix_LoadWAV("21_sound_effects_and_music/medium.wav");
+		if (gMedium == NULL)
+		{
+			printf("Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+			success = false;
+		}
 
-			gMedium = Mix_LoadWAV("21_sound_effects_and_music/medium.wav");
-			if (gMedium == NULL)
-			{
-				printf("Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-				success = false;
-			}
+		gLow = Mix_LoadWAV("21_sound_effects_and_music/low.wav");
+		if (gLow == NULL)
+		{
+			printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+			success = false;
+		}
 
-			gLow = Mix_LoadWAV("21_sound_effects_and_music/low.wav");
-			if (gLow == NULL)
-			{
-				printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-				success = false;
-			}
+		return success;
+	}
 
-			return success;
+	void playMedia()
+	{
+		Mix_PlayChannel(-1, gHigh, 0);
+
 	}
 };
 #endif

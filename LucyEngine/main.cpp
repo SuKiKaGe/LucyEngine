@@ -13,6 +13,9 @@ int main(int argc, char ** argv)
 
 	GameManager::CreateSingleton();
 
+	AudioManager::GetInstance().loadMedia();
+	AudioManager::GetInstance().playMedia();
+
 	SDL_Delay(5000);
 
 	//SDL_Quit();
