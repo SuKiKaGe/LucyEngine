@@ -47,5 +47,8 @@
     <ClInclude Include="ComponentSprite.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
