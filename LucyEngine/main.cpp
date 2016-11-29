@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include "GameManager.h"
+#include "AudioManager.h"
 
 int main(int argc, char ** argv)
 {
@@ -11,6 +12,9 @@ int main(int argc, char ** argv)
 	// Comentario de prueba de Xhyon
 
 	GameManager::CreateSingleton();
+
+	AudioManager::AddMusic("backgroundAudio.mp3", "1");
+	AudioManager::PlayMusic("1");
 
 	SDL_Delay(5000);
 
