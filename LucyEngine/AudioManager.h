@@ -6,7 +6,7 @@
 
 //Using SDL, SDL_image, SDL_ttf, SDL_mixer, standard IO, math, and strings
 #include <SDL.h>
-//#include <SDL_mixer.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 
@@ -39,7 +39,7 @@ class AudioManager : public Singleton <AudioManager>
 	/**********************************************************************************************************************/
 
 	// Lets the constructor access to class Singleton
-	friend class Singleton <RenderManager>;
+	friend class Singleton <AudioManager>;
 
 	/**********************************************************************************************************************/
 	// CONSTANTS
