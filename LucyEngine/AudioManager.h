@@ -1,129 +1,222 @@
 #pragma once
-#pragma once
-#ifndef RENDERMANAGER_H
-#define RENDERMANAGER_H
+
+#ifndef AUDIOMANAGER_H
+#define AUDIOMANAGER_H
 
 #include "Singleton.h"
 
-//Using SDL and standard IO
+//Using SDL, SDL_image, SDL_ttf, SDL_mixer, standard IO, math, and strings
 #include <SDL.h>
 #include <stdio.h>
+#include <string>
+#include "AudioManager.h"
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-//Starts up SDL and creates window
-bool init();
-
-//Loads media
-bool loadMedia();
-
-//Frees media and shuts down SDL
-void close();
-
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The surface contained by the window
-SDL_Surface* gScreenSurface = NULL;
-
-//The image we will load and show on the screen
-SDL_Surface* gHelloWorld = NULL;
-
-/**
-Class RenderManager
-Implements this class code
-*/
-class RenderManager : public Singleton <RenderManager>
+AudioManager::AudioManager()
 {
-	/**********************************************************************************************************************/
-	// ASSOCIATIONS
-	/**********************************************************************************************************************/
 
-	// Lets the constructor access to class Singleton
-	friend class Singleton <RenderManager>;
+}
 
-	/**********************************************************************************************************************/
-	// CONSTANTS
-	/**********************************************************************************************************************/
+AudioManager::~AudioManager()
+{
+	Clear();
+}
 
-	/**********************************************************************************************************************/
-	// TYPES
-	/**********************************************************************************************************************/
-
-	/**********************************************************************************************************************/
-	// METHODS
-	/**********************************************************************************************************************/
-
-private:
-
-	/**
-	Constructor
-	*/
-	RenderManager(void)
+void AudioManager::AddMusic(std::string filepath, std::string key)
+{
+	if (music[key] != NULL)
 	{
-		//RenderManager::CreateInstance();
-
-		//Initialization flag
-		bool success = true;
-
-		//Initialize SDL
-		if (SDL_Init(SDL_INIT_VIDEO) < 0)
-		{
-			printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-			success = false;
-		}
-		else
-		{
-			//Create window
-			gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-			if (gWindow == NULL)
-			{
-				printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-				success = false;
-			}
-			else
-			{
-				//Get window surface
-				gScreenSurface = SDL_GetWindowSurface(gWindow);
-			}
-		}
-
-		//return success;
+		LOG_DEBUG("There is already a music with that key! Key: " << key);
+		return;
 	}
 
-	/**
-	Destructor
-	*/
-	~RenderManager(void)
+	Mix_Music* tempMusic = NULL;
+	tempMusic = Mix_LoadMUS(filepath.c_str());
+
+	if (tempMusic == NULL)
 	{
-		//Deallocate surface
-		SDL_FreeSurface(gHelloWorld);
-		gHelloWorld = NULL;
-
-		//Destroy window
-		SDL_DestroyWindow(gWindow);
-		gWindow = NULL;
-
-		//Quit SDL subsystems
-		SDL_Quit();
+		LOG_ERROR("Music couldn't be loaded! Key: " << key << " Error: " << SDL_GetError());
+		return;
 	}
 
-	bool loadMedia()
-	{
-		//Loading success flag
-		bool success = true;
+	LOG("Music loaded! Key: " << key);
 
-		//Load splash image
-		gHelloWorld = SDL_LoadBMP("02_getting_an_image_on_the_screen/hello_world.bmp");
-		if (gHelloWorld == NULL)
+	music[key] = tempMusic;
+}
+
+void AudioManager::RemoveMusic(std::string key)
+{
+	if (music[key] == NULL)
+	{
+		LOG_DEBUG("The music can't be removed because it doesn't exist! Key: " << key);
+		return;
+	}
+
+	Mix_FreeMusic(music[key]);
+	music[key] = NULL;
+}
+
+void AudioManager::PlayMusic(std::string key)
+{
+	PlayMusic(key, -1);
+}
+
+void AudioManager::PlayMusic(std::string key, int loops)
+{
+	if (music[key] == NULL)
+	{
+		LOG_ERROR("Music couldn't be played because it doesn't exist! Key: " << key);
+		return;
+	}
+
+	if (Mix_PlayMusic((music[key]), loops) != 0)
+	{
+		LOG_ERROR("Error while trying to play music! Key: " << key << " Mixer error: " << SDL_GetError());
+	}
+}
+
+void AudioManager::StopMusic()
+{
+	Mix_HaltMusic();
+}
+
+void AudioManager::PauseMusic()
+{
+	Mix_PauseMusic();
+}
+
+void AudioManager::ResumeMusic()
+{
+	Mix_ResumeMusic();
+}
+
+void AudioManager::MusicVolume(int volume)
+{
+	if (volume > 100)
+		volume = 100;
+	if (volume < 0)
+		volume = 0;
+
+	Mix_VolumeMusic((MIX_MAX_VOLUME / 100) * volume);
+}
+
+void AudioManager::AddSoundEffect(std::string filepath, std::string key)
+{
+	if (soundEffect[key] != NULL)
+	{
+		LOG_DEBUG("There is already a soundEffect with that key! Key: " << key);
+		return;
+	}
+
+	Mix_Chunk* tempEffect = NULL;
+	tempEffect = Mix_LoadWAV(filepath.c_str());
+
+	if (tempEffect == NULL)
+	{
+		LOG_ERROR("SoundEffect couldn't be loaded! Key: " << key << " Error: " << SDL_GetError());
+		return;
+	}
+
+	soundEffect[key] = tempEffect;
+}
+
+void AudioManager::RemoveSoundEffect(std::string key)
+{
+	if (soundEffect[key] == NULL)
+	{
+		LOG_DEBUG("The SoundEffect can't be removed because it doesn't exist! Key: " << key);
+		return;
+	}
+
+	Mix_FreeChunk(soundEffect[key]);
+	soundEffect[key] = NULL;
+}
+
+void AudioManager::PlaySoundEffect(std::string key)
+{
+	PlaySoundEffect(key, 0);
+}
+
+void AudioManager::PlaySoundEffect(std::string key, int loops)
+{
+	if (soundEffect[key] == NULL)
+	{
+		LOG_ERROR("SoundEffect couldn't be played because it doesn't exist! Key: " << key);
+		return;
+	}
+
+	Mix_PlayChannel(-1, soundEffect[key], loops);
+}
+
+void AudioManager::SoundEffectVolume(std::string key, int volume)
+{
+	if (volume > 100)
+		volume = 100;
+	if (volume < 0)
+		volume = 0;
+
+	if (soundEffect[key] == NULL)
+	{
+		LOG_DEBUG("SoundEffect's volume couldn't be changed because it doesn't exist! Key: " << key);
+		return;
+	}
+
+	Mix_VolumeChunk(soundEffect[key], (MIX_MAX_VOLUME / 100) * volume);
+}
+
+void AudioManager::SoundEffectsVolume(int volume)
+{
+	if (volume > 100)
+		volume = 100;
+	if (volume < 0)
+		volume = 0;
+
+	Mix_Volume(-1, (MIX_MAX_VOLUME / 100) * volume);
+}
+
+void AudioManager::Stop()
+{
+	Mix_HaltChannel(-1);
+}
+
+void AudioManager::Pause()
+{
+	Mix_Pause(-1);
+}
+
+void AudioManager::Resume()
+{
+	Mix_Resume(-1);
+}
+
+void AudioManager::Clear()
+{
+	Mix_HaltMusic();
+
+	if (!soundEffect.empty())
+		Mix_HaltChannel(-1);
+
+	for (auto iterator = music.begin(); iterator != music.end(); iterator++)
+	{
+		if (iterator->second != NULL)
 		{
-			printf("Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
-			success = false;
+			std::cout << "Destroyed music: " << iterator->first << std::endl;
+			Mix_FreeMusic(iterator->second);
+			iterator->second = NULL;
 		}
-
-		return success;
 	}
-};
+
+	music.clear();
+
+	for (auto iterator = soundEffect.begin(); iterator != soundEffect.end(); iterator++)
+	{
+		if (iterator->second != NULL)
+		{
+			std::cout << "Destroyed soundEffect: " << iterator->first << std::endl;
+			Mix_FreeChunk(iterator->second);
+			iterator->second = NULL;
+		}
+	}
+
+	soundEffect.clear();
+}
 #endif
