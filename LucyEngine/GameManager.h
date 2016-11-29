@@ -4,6 +4,7 @@
 
 #include "Singleton.h"
 #include "RenderManager.h"
+#include "AudioManager.h"
 
 /**
 Class GameManager
