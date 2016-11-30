@@ -22,6 +22,9 @@ bool loadMedia();
 //Frees media and shuts down SDL
 void close();
 
+//Loads individual image
+SDL_Surface* loadSurface(std::string path);
+
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
@@ -30,6 +33,9 @@ SDL_Surface* gScreenSurface = NULL;
 
 //The image we will load and show on the screen
 SDL_Surface* gHelloWorld = NULL;
+
+//Current displayed image
+SDL_Surface* gCurrentSurface = NULL;
 
 /**
 Class RenderManager
@@ -56,7 +62,7 @@ class RenderManager : public Singleton <RenderManager>
 	// METHODS
 	/**********************************************************************************************************************/
 
-private:
+public:
 
 	/**
 	Constructor
@@ -124,6 +130,18 @@ private:
 		}
 
 		return success;
+	}
+
+	SDL_Surface* loadSurface(std::string path)
+	{
+		//Load image at specified path
+		SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
+		if (loadedSurface == NULL)
+		{
+			printf("Unable to load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+		}
+
+		return loadedSurface;
 	}
 };
 #endif

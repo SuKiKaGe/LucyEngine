@@ -1,17 +1,24 @@
 #pragma once
-#pragma once
-#ifndef RENDERMANAGER_H
-#define RENDERMANAGER_H
+#ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
 
 #include "Singleton.h"
 
-//Using SDL and standard IO
+//Using SDL, standard IO, and strings
 #include <SDL.h>
 #include <stdio.h>
+#include <string>
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+//Key press surfaces constants
+enum KeyPressSurfaces
+{
+	KEY_PRESS_SURFACE_DEFAULT,
+	KEY_PRESS_SURFACE_UP,
+	KEY_PRESS_SURFACE_DOWN,
+	KEY_PRESS_SURFACE_LEFT,
+	KEY_PRESS_SURFACE_RIGHT,
+	KEY_PRESS_SURFACE_TOTAL
+};
 
 //Starts up SDL and creates window
 bool init();
@@ -31,18 +38,21 @@ SDL_Surface* gScreenSurface = NULL;
 //The image we will load and show on the screen
 SDL_Surface* gHelloWorld = NULL;
 
+//The images that correspond to a keypress
+SDL_Surface* gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
+
 /**
 Class RenderManager
 Implements this class code
 */
-class RenderManager : public Singleton <RenderManager>
+class InputManager : public Singleton <InputManager>
 {
 	/**********************************************************************************************************************/
 	// ASSOCIATIONS
 	/**********************************************************************************************************************/
 
 	// Lets the constructor access to class Singleton
-	friend class Singleton <RenderManager>;
+	friend class Singleton <InputManager>;
 
 	/**********************************************************************************************************************/
 	// CONSTANTS
@@ -56,22 +66,23 @@ class RenderManager : public Singleton <RenderManager>
 	// METHODS
 	/**********************************************************************************************************************/
 
-private:
+public:
 
 	/**
 	Constructor
 	*/
-	RenderManager(void)
+	InputManager(void)
 	{
-		//RenderManager::CreateInstance();
+		//InputManager::CreateInstance();
 
+		/*
 		//Initialization flag
 		bool success = true;
 
 		//Initialize SDL
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		{
-			printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+			printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 			success = false;
 		}
 		else
@@ -80,7 +91,7 @@ private:
 			gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 			if (gWindow == NULL)
 			{
-				printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+				printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
 				success = false;
 			}
 			else
@@ -89,6 +100,7 @@ private:
 				gScreenSurface = SDL_GetWindowSurface(gWindow);
 			}
 		}
+		*/
 
 		//return success;
 	}
@@ -96,11 +108,14 @@ private:
 	/**
 	Destructor
 	*/
-	~RenderManager(void)
+	~InputManager(void)
 	{
-		//Deallocate surface
-		SDL_FreeSurface(gHelloWorld);
-		gHelloWorld = NULL;
+		//Deallocate surfaces
+		for (int i = 0; i < KEY_PRESS_SURFACE_TOTAL; ++i)
+		{
+			SDL_FreeSurface(gKeyPressSurfaces[i]);
+			gKeyPressSurfaces[i] = NULL;
+		}
 
 		//Destroy window
 		SDL_DestroyWindow(gWindow);
@@ -115,11 +130,43 @@ private:
 		//Loading success flag
 		bool success = true;
 
-		//Load splash image
-		gHelloWorld = SDL_LoadBMP("02_getting_an_image_on_the_screen/hello_world.bmp");
-		if (gHelloWorld == NULL)
+		//Load default surface
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("04_key_presses/press.bmp");
+		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL)
 		{
-			printf("Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
+			printf("Failed to load default image!\n");
+			success = false;
+		}
+
+		//Load up surface
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("04_key_presses/up.bmp");
+		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == NULL)
+		{
+			printf("Failed to load up image!\n");
+			success = false;
+		}
+
+		//Load down surface
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("04_key_presses/down.bmp");
+		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == NULL)
+		{
+			printf("Failed to load down image!\n");
+			success = false;
+		}
+
+		//Load left surface
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("04_key_presses/left.bmp");
+		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == NULL)
+		{
+			printf("Failed to load left image!\n");
+			success = false;
+		}
+
+		//Load right surface
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("04_key_presses/right.bmp");
+		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == NULL)
+		{
+			printf("Failed to load right image!\n");
 			success = false;
 		}
 
