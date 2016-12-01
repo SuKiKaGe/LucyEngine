@@ -113,6 +113,7 @@ private:
 					SDL_UpdateWindowSurface(gWindow);
 				}
 			}
+		}
 	}
 
 	/**
