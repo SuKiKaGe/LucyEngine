@@ -5,6 +5,7 @@
 #include "Singleton.h"
 #include "RenderManager.h"
 #include "AudioManager.h"
+#include "InputManager.h"
 
 /**
 Class GameManager
@@ -42,6 +43,7 @@ private:
 
 		RenderManager::CreateSingleton();
 		AudioManager::CreateSingleton();
+		InputManager::CreateSingleton();
 	}
 
 	/**
