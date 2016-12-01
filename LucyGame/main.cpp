@@ -24,14 +24,14 @@ int main(int argc, char ** argv)
 
 		ObjectManager::GetInstance().AddObject( new Cat() )
 			Cat cat = new Cat("cat.bmp", pos, orientation, sound);;
-	{
-		Update() {
-			if (InputManager.Key()) {
-				Cat.Position()
+				{
+					Update() {
+						if (InputManager.Key()) {
+							Cat.Position()
 
-			}
-		}
-	}
+						}
+					}
+				}
 
 
 	new Mouse()

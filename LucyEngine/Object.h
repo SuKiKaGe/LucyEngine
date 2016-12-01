@@ -93,6 +93,11 @@ private:
 		//return success;
 	}
 
+	virtual void Update()
+	{
+
+	}
+
 	/**
 	Destructor
 	*/

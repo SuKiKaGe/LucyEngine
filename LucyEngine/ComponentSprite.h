@@ -6,6 +6,8 @@
 #include <iostream>
 using namespace std;
 
+#define SPRITE_PATH "../"
+
 //Using SDL and standard IO
 #include <SDL.h>
 #include <stdio.h>
@@ -23,6 +25,11 @@ class ComponentSprite : public Component
 	/**********************************************************************************************************************/
 	// CONSTANTS
 	/**********************************************************************************************************************/
+	
+	//static const std::string SPRITE_PATH = "../";
+
+
+	SDL_Surface * mSprite = NULL;
 
 	/**********************************************************************************************************************/
 	// TYPES
@@ -40,8 +47,7 @@ private:
 	ComponentSprite( std::string spriteName ) :
 		Component()
 	{
-		cout << "Happy Image Loaded" << endl;
-		ResourcesManager.loadSprite(spriteName);
+		mSprite = RenderManager::GetInstance().loadSurface(SPRITE_PATH+spriteName);
 	}
 
 	/**
