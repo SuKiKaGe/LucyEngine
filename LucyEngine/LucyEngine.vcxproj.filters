@@ -50,12 +50,6 @@
     <ClInclude Include="AudioManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="LogicManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>

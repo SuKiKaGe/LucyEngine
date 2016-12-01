@@ -29,7 +29,7 @@ struct Transform {
 
 // Rotation - Future Implementation
 
-Component components[];
+Component *componentes[];
 
 /**
 Class Object

@@ -19,6 +19,44 @@ int main(int argc, char ** argv)
 
 
 
+	//Start game
+	{
+
+		ObjectManager::GetInstance().AddObject( new Cat() )
+			Cat cat = new Cat("cat.bmp", pos, orientation, sound);;
+	{
+		Update() {
+			if (InputManager.Key()) {
+				Cat.Position()
+
+			}
+		}
+	}
+
+
+	new Mouse()
+
+
+
+	}
+
+
+	{
+		Object cat = new Object("cat.bmp", ...);
+
+		mouse = new Object( mouse )
+	
+
+			if (InputManager.Key()) {
+				Cat.Position()
+
+			}
+
+			if( Cat.Touches(mouse ))
+				win()
+		}
+	}
+    
 
 	return 0;
 }
