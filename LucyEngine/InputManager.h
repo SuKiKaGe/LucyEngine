@@ -3,6 +3,7 @@
 #define INPUTMANAGER_H
 
 #include "Singleton.h"
+#include "RenderManager.h"
 
 //Using SDL, standard IO, and strings
 #include <SDL.h>
@@ -103,6 +104,62 @@ public:
 		*/
 
 		//return success;
+
+		//Main loop flag
+		bool quit = false;
+
+		//Event handler
+		SDL_Event e;
+
+		//Set default current surface
+		RenderManager::GetInstance().gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+
+		//While application is running
+		while (!quit)
+		{
+			//Handle events on queue
+			while (SDL_PollEvent(&e) != 0)
+			{
+				//User requests quit
+				if (e.type == SDL_QUIT)
+				{
+					quit = true;
+				}
+				//User presses a key
+				else if (e.type == SDL_KEYDOWN)
+				{
+					//Select surfaces based on key press
+					switch (e.key.keysym.sym)
+					{
+					case SDLK_UP:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
+						break;
+
+					case SDLK_DOWN:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
+						break;
+
+					case SDLK_LEFT:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
+						break;
+
+					case SDLK_RIGHT:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
+						break;
+
+					default:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+						break;
+					}
+				}
+			}
+
+			//Apply the current image
+			SDL_BlitSurface(gCurrentSurface, NULL, gScreenSurface, NULL);
+
+			//Update the surface
+			SDL_UpdateWindowSurface(gWindow);
+		}
 	}
 
 	/**
@@ -131,7 +188,7 @@ public:
 		bool success = true;
 
 		//Load default surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("04_key_presses/press.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = RenderManager::GetInstance().loadSurface("04_key_presses/press.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL)
 		{
 			printf("Failed to load default image!\n");
@@ -139,7 +196,7 @@ public:
 		}
 
 		//Load up surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("04_key_presses/up.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = RenderManager::GetInstance().loadSurface("04_key_presses/up.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == NULL)
 		{
 			printf("Failed to load up image!\n");
@@ -147,7 +204,7 @@ public:
 		}
 
 		//Load down surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("04_key_presses/down.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = RenderManager::GetInstance().loadSurface("04_key_presses/down.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == NULL)
 		{
 			printf("Failed to load down image!\n");
@@ -155,7 +212,7 @@ public:
 		}
 
 		//Load left surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("04_key_presses/left.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = RenderManager::GetInstance().loadSurface("04_key_presses/left.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == NULL)
 		{
 			printf("Failed to load left image!\n");
@@ -163,7 +220,7 @@ public:
 		}
 
 		//Load right surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("04_key_presses/right.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = RenderManager::GetInstance().loadSurface("04_key_presses/right.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == NULL)
 		{
 			printf("Failed to load right image!\n");
