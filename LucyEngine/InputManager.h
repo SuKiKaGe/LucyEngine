@@ -103,7 +103,9 @@ public:
 		SDL_Event e;
 
 		//Set default current surface
-		RenderManager::GetInstance().gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+		RenderManager::GetInstance().SetCurrentSurface( gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] );
+
+		loadMedia();
 
 		//While application is running
 		while (!quit)
@@ -123,30 +125,34 @@ public:
 					switch (e.key.keysym.sym)
 					{
 					case SDLK_UP:
-						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
+						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_UP]);
 						break;
 
 					case SDLK_DOWN:
-						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
+						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN]);
 						break;
 
 					case SDLK_LEFT:
-						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
+						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT]);
 						break;
 
 					case SDLK_RIGHT:
-						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
+						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT]);
 						break;
 
 					default:
-						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT]);
 						break;
 					}
+				}
+				else
+				{
+					RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT]);
 				}
 			}
 
 			//Apply the current image
-			SDL_BlitSurface(gCurrentSurface, NULL, gScreenSurface, NULL);
+			SDL_BlitSurface(RenderManager::GetInstance().GetCurrentSurface(), NULL, gScreenSurface, NULL);
 
 			//Update the surface
 			SDL_UpdateWindowSurface(gWindow);

@@ -34,8 +34,7 @@ SDL_Surface* gScreenSurface = NULL;
 //The image we will load and show on the screen
 SDL_Surface* gHelloWorld = NULL;
 
-//Current displayed image
-SDL_Surface* gCurrentSurface = NULL;
+
 
 /**
 Class RenderManager
@@ -57,6 +56,9 @@ class RenderManager : public Singleton <RenderManager>
 	/**********************************************************************************************************************/
 	// TYPES
 	/**********************************************************************************************************************/
+	
+	//Current displayed image
+	SDL_Surface* gCurrentSurface = NULL;
 
 	/**********************************************************************************************************************/
 	// METHODS
@@ -143,5 +145,9 @@ public:
 
 		return loadedSurface;
 	}
+
+	SDL_Surface* GetCurrentSurface(void) { return gCurrentSurface; }
+	void SetCurrentSurface(SDL_Surface * sdl_Surface) { gCurrentSurface = sdl_Surface; }
+
 };
 #endif
