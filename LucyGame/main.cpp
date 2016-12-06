@@ -21,7 +21,8 @@ int main(int argc, char ** argv)
 
 	//Start game
 	{
-
+		// Example of functionalities
+		/*
 		ObjectManager::GetInstance().AddObject( new Cat() )
 			Cat cat = new Cat("cat.bmp", pos, orientation, sound);;
 				{
@@ -34,29 +35,29 @@ int main(int argc, char ** argv)
 				}
 
 
-	new Mouse()
+		new Mouse()
 
 
 
-	}
+		}
 
 
-	{
-		Object cat = new Object("cat.bmp", ...);
+		{
+			Object cat = new Object("cat.bmp", ...);
 
-		mouse = new Object( mouse )
+			mouse = new Object( mouse )
 	
 
-			if (InputManager.Key()) {
-				Cat.Position()
+				if (InputManager.Key()) {
+					Cat.Position()
 
+				}
+
+				if( Cat.Touches(mouse ))
+					win()
 			}
-
-			if( Cat.Touches(mouse ))
-				win()
+			*/
 		}
-	}
-    
 
 	return 0;
 }
