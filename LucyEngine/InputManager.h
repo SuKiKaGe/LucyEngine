@@ -139,10 +139,12 @@ public:
 					case SDLK_RIGHT:
 						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT]);
 						break;
-
+					// Commented to test the animation of the player
+					/*
 					default:
 						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT]);
 						break;
+					*/
 					}
 				}
 				else
@@ -184,6 +186,8 @@ public:
 		//Loading success flag
 		bool success = true;
 
+		// Commented to test the animation of the player
+		/*
 		//Load default surface
 		gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = RenderManager::GetInstance().loadSurface("../press.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL)
@@ -191,6 +195,7 @@ public:
 			printf("Failed to load default image!\n");
 			success = false;
 		}
+		*/
 
 		//Load up surface
 		gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = RenderManager::GetInstance().loadSurface("../up.bmp");
