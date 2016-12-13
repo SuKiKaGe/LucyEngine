@@ -383,7 +383,7 @@ public:
 		*/
 
 		//Load sprite sheet texture
-		if (!gSpriteSheetTexture.loadFromFile("../cat.bmp"))
+		if (!gSpriteSheetTexture.loadFromFile("../foo.png"))
 		{
 			printf("Failed to load walking animation texture!\n");
 			success = false;
