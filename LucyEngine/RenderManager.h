@@ -111,6 +111,7 @@ bool LTexture::loadFromFile(std::string path)
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL)
 	{
+		std::string str = IMG_GetError();
 		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
 	}
 	else
@@ -382,7 +383,7 @@ public:
 		*/
 
 		//Load sprite sheet texture
-		if (!gSpriteSheetTexture.loadFromFile("../foo.png"))
+		if (!gSpriteSheetTexture.loadFromFile("foo.png"))
 		{
 			printf("Failed to load walking animation texture!\n");
 			success = false;
