@@ -15,13 +15,11 @@ int main(int argc, char ** argv)
 
 	AudioManager::GetInstance().loadMedia();
 	AudioManager::GetInstance().playMedia();
+	RenderManager::GetInstance().Draw();
 
 	SDL_Delay(5000);
 
 	//SDL_Quit();
-
-
-
 
 	return 0;
 }

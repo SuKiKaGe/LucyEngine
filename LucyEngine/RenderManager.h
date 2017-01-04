@@ -80,6 +80,22 @@ SDL_Surface* gHelloWorld = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
+// Testing
+
+class Sprite {
+
+public:
+
+	int x;
+	int y;
+	Sprite() : x(0), y(0) { }
+
+};
+
+Sprite              mHero;
+SDL_Surface        *mScratchSurface = NULL;   // Surface to use
+SDL_Texture        *mScratchTexture = NULL;   // Texture to use
+
 //Walking animation
 const int WALKING_ANIMATION_FRAMES = 4;
 SDL_Rect gSpriteClips[WALKING_ANIMATION_FRAMES];
@@ -364,6 +380,58 @@ public:
 
 		//Quit SDL subsystems
 		SDL_Quit();
+	}
+
+	void RenderManager::Draw()
+	{
+		// RENDER USING RENDERER
+
+		// Load BMP
+		mScratchSurface = SDL_LoadBMP(("../Scratch.bmp"));
+		if (mScratchSurface == NULL)
+		{
+			return;
+		}
+
+		mScratchTexture = SDL_CreateTextureFromSurface(gRenderer, mScratchSurface);
+		if (mScratchTexture == NULL) {
+			return;
+		}
+
+		// Clear screen  
+		SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+		SDL_RenderClear(gRenderer);
+
+		//// Render hero  
+		SDL_Rect heroRect;
+		heroRect.x = mHero.x;
+		heroRect.y = mHero.y;
+		heroRect.w = 20;
+		heroRect.h = 20;
+		FillRect(&heroRect, 255, 0, 0);
+
+		// Render Scratch
+		SDL_Rect scracthRect;
+		scracthRect.x = mHero.x + 100;
+		scracthRect.y = mHero.y + 100;
+		scracthRect.w = 75; // Scale
+		scracthRect.h = 75; // Scale
+		SDL_RenderCopy(gRenderer, mScratchTexture, NULL, &scracthRect);
+
+		SDL_Rect scracthRect2;
+		scracthRect2.x = mHero.x + 200;
+		scracthRect2.y = mHero.y + 200;
+		scracthRect2.w = 75; // Scale
+		scracthRect2.h = 75; // Scale  
+		SDL_RenderCopy(gRenderer, mScratchTexture, NULL, &scracthRect2);
+
+		SDL_RenderPresent(gRenderer);
+	}
+
+	void RenderManager::FillRect(SDL_Rect* rc, int r, int g, int b)
+	{
+		SDL_SetRenderDrawColor(gRenderer, r, g, b, SDL_ALPHA_OPAQUE);
+		SDL_RenderFillRect(gRenderer, rc);
 	}
 
 	bool loadMedia()
