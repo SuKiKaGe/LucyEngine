@@ -217,14 +217,14 @@ int LTexture::getHeight()
 Class RenderManager
 Implements this class code
 */
-class RenderManager : public Singleton <RenderManager>
+class NewRenderManager : public Singleton <NewRenderManager>
 {
 	/**********************************************************************************************************************/
 	// ASSOCIATIONS
 	/**********************************************************************************************************************/
 
 	// Lets the constructor access to class Singleton
-	friend class Singleton <RenderManager>;
+	friend class Singleton <NewRenderManager>;
 
 	/**********************************************************************************************************************/
 	// CONSTANTS
@@ -246,7 +246,7 @@ public:
 	/**
 	Constructor
 	*/
-	RenderManager(void)
+	NewRenderManager(void)
 	{
 		//RenderManager::CreateInstance();
 
@@ -362,7 +362,7 @@ public:
 	/**
 	Destructor
 	*/
-	~RenderManager(void)
+	~NewRenderManager(void)
 	{
 		//Deallocate surface
 		SDL_FreeSurface(gHelloWorld);
@@ -382,7 +382,7 @@ public:
 		SDL_Quit();
 	}
 
-	void RenderManager::Draw()
+	void NewRenderManager::Draw()
 	{
 		// RENDER USING RENDERER
 
@@ -428,7 +428,7 @@ public:
 		SDL_RenderPresent(gRenderer);
 	}
 
-	void RenderManager::FillRect(SDL_Rect* rc, int r, int g, int b)
+	void NewRenderManager::FillRect(SDL_Rect* rc, int r, int g, int b)
 	{
 		SDL_SetRenderDrawColor(gRenderer, r, g, b, SDL_ALPHA_OPAQUE);
 		SDL_RenderFillRect(gRenderer, rc);

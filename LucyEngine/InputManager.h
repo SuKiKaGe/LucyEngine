@@ -103,7 +103,7 @@ public:
 		SDL_Event e;
 
 		//Set default current surface
-		RenderManager::GetInstance().SetCurrentSurface( gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] );
+		NewRenderManager::GetInstance().SetCurrentSurface( gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] );
 
 		loadMedia();
 
@@ -125,19 +125,19 @@ public:
 					switch (e.key.keysym.sym)
 					{
 					case SDLK_UP:
-						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_UP]);
+						NewRenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_UP]);
 						break;
 
 					case SDLK_DOWN:
-						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN]);
+						NewRenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN]);
 						break;
 
 					case SDLK_LEFT:
-						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT]);
+						NewRenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT]);
 						break;
 
 					case SDLK_RIGHT:
-						RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT]);
+						NewRenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT]);
 						break;
 					// Commented to test the animation of the player
 					/*
@@ -149,12 +149,12 @@ public:
 				}
 				else
 				{
-					RenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT]);
+					NewRenderManager::GetInstance().SetCurrentSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT]);
 				}
 			}
 
 			//Apply the current image
-			SDL_BlitSurface(RenderManager::GetInstance().GetCurrentSurface(), NULL, gScreenSurface, NULL);
+			SDL_BlitSurface(NewRenderManager::GetInstance().GetCurrentSurface(), NULL, gScreenSurface, NULL);
 
 			//Update the surface
 			SDL_UpdateWindowSurface(gWindow);
@@ -198,7 +198,7 @@ public:
 		*/
 
 		//Load up surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = RenderManager::GetInstance().loadSurface("../up.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = NewRenderManager::GetInstance().loadSurface("../up.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == NULL)
 		{
 			printf("Failed to load up image!\n");
@@ -206,7 +206,7 @@ public:
 		}
 
 		//Load down surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = RenderManager::GetInstance().loadSurface("../down.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = NewRenderManager::GetInstance().loadSurface("../down.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == NULL)
 		{
 			printf("Failed to load down image!\n");
@@ -214,7 +214,7 @@ public:
 		}
 
 		//Load left surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = RenderManager::GetInstance().loadSurface("../left.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = NewRenderManager::GetInstance().loadSurface("../left.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == NULL)
 		{
 			printf("Failed to load left image!\n");
@@ -222,7 +222,7 @@ public:
 		}
 
 		//Load right surface
-		gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = RenderManager::GetInstance().loadSurface("../right.bmp");
+		gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = NewRenderManager::GetInstance().loadSurface("../right.bmp");
 		if (gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == NULL)
 		{
 			printf("Failed to load right image!\n");

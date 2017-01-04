@@ -127,6 +127,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NewGameManager.cpp" />
+    <ClCompile Include="NewRenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
@@ -134,6 +136,9 @@
     <ClInclude Include="ComponentSprite.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="NewGameManager.h" />
+    <ClInclude Include="NewInputManager.h" />
+    <ClInclude Include="NewRenderManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="RenderManager.h" />

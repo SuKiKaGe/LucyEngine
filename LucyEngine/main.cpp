@@ -15,7 +15,7 @@ int main(int argc, char ** argv)
 
 	AudioManager::GetInstance().loadMedia();
 	AudioManager::GetInstance().playMedia();
-	RenderManager::GetInstance().Draw();
+	NewRenderManager::GetInstance().Draw();
 
 	SDL_Delay(5000);
 

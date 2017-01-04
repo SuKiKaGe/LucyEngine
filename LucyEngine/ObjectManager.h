@@ -35,14 +35,14 @@ SDL_Surface* gHelloWorld = NULL;
 Class RenderManager
 Implements this class code
 */
-class RenderManager : public Singleton <RenderManager>
+class NewRenderManager : public Singleton <NewRenderManager>
 {
 	/**********************************************************************************************************************/
 	// ASSOCIATIONS
 	/**********************************************************************************************************************/
 
 	// Lets the constructor access to class Singleton
-	friend class Singleton <RenderManager>;
+	friend class Singleton <NewRenderManager>;
 
 	/**********************************************************************************************************************/
 	// CONSTANTS
@@ -61,7 +61,7 @@ private:
 	/**
 	Constructor
 	*/
-	RenderManager(void)
+	NewRenderManager(void)
 	{
 		//RenderManager::CreateInstance();
 
@@ -96,7 +96,7 @@ private:
 	/**
 	Destructor
 	*/
-	~RenderManager(void)
+	~NewRenderManager(void)
 	{
 		//Deallocate surface
 		SDL_FreeSurface(gHelloWorld);

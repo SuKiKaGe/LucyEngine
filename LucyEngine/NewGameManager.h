@@ -1,24 +1,26 @@
 #pragma once
-#ifndef GAMEMANAGER_H
-#define GAMEMANAGER_H
+
+#ifndef NEWGAMEMANAGER_H
+#define NEWGAMEMANAGER_H
 
 #include "Singleton.h"
-#include "RenderManager.h"
-#include "AudioManager.h"
-#include "InputManager.h"
+#include "NewRenderManager.h"
+#include "NewInputManager.h"
+
+#include "NewGameManager.cpp"
 
 /**
-Class GameManager
+Class NewGameManager
 Implements this class code
 */
-class GameManager : public Singleton <GameManager>
+class NewGameManager : public Singleton <NewGameManager>
 {
 	/**********************************************************************************************************************/
 	// ASSOCIATIONS
 	/**********************************************************************************************************************/
 
 	// Lets the constructor access to class Singleton
-	friend class Singleton <GameManager>;
+	friend class Singleton <NewGameManager>;
 
 	/**********************************************************************************************************************/
 	// CONSTANTS
@@ -31,27 +33,42 @@ class GameManager : public Singleton <GameManager>
 	/**********************************************************************************************************************/
 	// METHODS
 	/**********************************************************************************************************************/
+	
+public:
+
+	void Start();
+	void Stop();
+
+	int mRunning;
+
+	void Run();
+	void Update();
+
+	// Time manager
+	void FPSChanged(int fps);
+
+	void set_mRunning(int value);
+
+	const float NewGameManager::UPDATE_INTERVAL = 1000.0f / 60.0f;
 
 private:
 
 	/**
 	Constructor
 	*/
-	GameManager(void)
+	NewGameManager(void)
 	{
-		SDL_Init(SDL_INIT_VIDEO);
-
 		NewRenderManager::CreateSingleton();
-		AudioManager::CreateSingleton();
-		InputManager::CreateSingleton();
+		NewInputManager::CreateSingleton();
 	}
 
 	/**
 	Destructor
 	*/
-	~GameManager(void)
+	~NewGameManager(void)
 	{
+		Stop();
 	}
-
 };
+
 #endif
