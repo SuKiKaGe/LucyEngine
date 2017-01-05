@@ -3,8 +3,10 @@
 #ifndef NEWRENDERMANAGER_H
 #define NEWRENDERMANAGER_H
 
+#include <string>
+
 #include "Singleton.h"
-#include "NewGameManager.h"
+//#include "NewGameManager.h"
 #include "NewInputManager.h"
 
 //Using SDL and standard IO
@@ -12,7 +14,6 @@
 #include <stdio.h>
 #include <cstdio>  
 #include <map>  
-#include <string>
 
 class Sprite {
 
@@ -23,12 +24,6 @@ public:
 	Sprite() : x(0), y(0) { }
 
 };
-
-//Starts up SDL and creates window
-bool init();
-
-//Frees media and shuts down SDL
-void close();
 
 /**
 Class NewRenderManager
@@ -85,11 +80,12 @@ public:
 
 	void Set_mHero_x(int value);
 	void Set_mHero_y(int value);
-	SDL_Renderer get_mWindow();
+	SDL_Window get_mWindow();
+
 	/**
 	Constructor
 	*/
-	NewRenderManager(void):(mWindow(NULL), mRenderer(NULL)
+	NewRenderManager(void)
 	{
 		int flags = SDL_WINDOW_SHOWN;
 		if (SDL_Init(SDL_INIT_EVERYTHING)) {
@@ -175,10 +171,10 @@ void NewRenderManager::FillRect(SDL_Rect* rc, int r, int g, int b)
 	SDL_RenderFillRect(mRenderer, rc);
 }
 
-SDL_Renderer get_mWindow() { return mWindow; };
+SDL_Window NewRenderManager::get_mWindow() { return mWindow; };
 
-void NewRenderManager::Set_mHero_x(int value) { mHero.x + value; };
+void NewRenderManager::Set_mHero_x(int value) { mHero.x += value; };
 
-void NewRenderManager::Set_mHero_y(int value) { mHero.y + value; };
+void NewRenderManager::Set_mHero_y(int value) { mHero.y += value; };
 
 #endif

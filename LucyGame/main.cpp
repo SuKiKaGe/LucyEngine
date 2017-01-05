@@ -4,6 +4,7 @@
 int main(int argc, char ** argv)
 {
 	NewGameManager::CreateSingleton();
+	NewGameManager::GetInstance().Start();
 
 	// OLD CODE WORKING BAD BUT WITH ANOTATIONS ABOUT HOW TO RUN A GAME IN A RIGHT WAY
 	/*

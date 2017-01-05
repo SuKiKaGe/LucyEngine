@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewGameManager.cpp" />
+    <ClCompile Include="NewInputManager.cpp" />
     <ClCompile Include="NewRenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>

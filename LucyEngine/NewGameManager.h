@@ -3,11 +3,13 @@
 #ifndef NEWGAMEMANAGER_H
 #define NEWGAMEMANAGER_H
 
+#include <string>
+
 #include "Singleton.h"
 #include "NewRenderManager.h"
 #include "NewInputManager.h"
 
-#include "NewGameManager.cpp"
+//#include "NewGameManager.cpp"
 
 /**
 Class NewGameManager
@@ -56,7 +58,7 @@ private:
 	/**
 	Constructor
 	*/
-	NewGameManager(void)
+	NewGameManager(void) //:mRunning(0), mWindow(NULL), mRenderer(NULL)
 	{
 		NewRenderManager::CreateSingleton();
 		NewInputManager::CreateSingleton();

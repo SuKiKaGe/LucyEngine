@@ -1,3 +1,5 @@
+#include <string>
+
 #include "NewGameManager.h"
 #include "NewInputManager.h"
 #include "NewRenderManager.h"
@@ -38,10 +40,10 @@ void NewGameManager::Run()
 		// update/draw  
 		now = SDL_GetTicks();
 		timeElapsed = now - past;
-		if (timeElapsed >= UPDATE_INTERVAL) {
+		if (timeElapsed >= NewGameManager::GetInstance().UPDATE_INTERVAL) {
 			past = now;
 
-			Update();
+			NewGameManager::GetInstance().Update();
 			NewRenderManager::GetInstance().Draw();
 
 			++fps;

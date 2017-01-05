@@ -27,6 +27,9 @@
     <ClCompile Include="NewGameManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="NewInputManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
