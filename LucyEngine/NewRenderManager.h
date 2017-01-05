@@ -80,7 +80,7 @@ public:
 
 	void Set_mHero_x(int value);
 	void Set_mHero_y(int value);
-	SDL_Window get_mWindow();
+	//SDL_Window get_mWindow();
 
 	/**
 	Constructor
@@ -171,7 +171,7 @@ void NewRenderManager::FillRect(SDL_Rect* rc, int r, int g, int b)
 	SDL_RenderFillRect(mRenderer, rc);
 }
 
-SDL_Window NewRenderManager::get_mWindow() { return mWindow; };
+//SDL_Window NewRenderManager::get_mWindow() { return mWindow; };
 
 void NewRenderManager::Set_mHero_x(int value) { mHero.x += value; };
 

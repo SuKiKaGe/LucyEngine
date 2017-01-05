@@ -20,7 +20,7 @@ void NewGameManager::FPSChanged(int fps)
 	//sprintf(szFps, "%s: %d FPS", "SDL2 Base C++ - Use Arrow Keys to Move", fps);
 	std::string title = std::string("Test - FPS = ") + std::to_string(fps);
 
-	SDL_SetWindowTitle(NewRenderManager::GetInstance().get_mWindow, title.c_str());
+	//SDL_SetWindowTitle(NewRenderManager::GetInstance().get_mWindow, title.c_str());
 }
 
 void NewGameManager::Run()

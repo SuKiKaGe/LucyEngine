@@ -2,6 +2,7 @@
 
 #include "NewGameManager.h"
 #include "NewRenderManager.h"
+#include "NewInputManager.h"
 
 // Input manager
 void NewInputManager::EventManagement()
@@ -33,13 +34,13 @@ void NewInputManager::Update()
 		NewRenderManager::GetInstance().Set_mHero_x(-NewRenderManager::GetInstance().HERO_SPEED);
 	}
 	if (mKeys[SDLK_RIGHT]) {
-		NewRenderManager::GetInstance().mHero.x += NewRenderManager::GetInstance().HERO_SPEED;
+		NewRenderManager::GetInstance().Set_mHero_x(NewRenderManager::GetInstance().HERO_SPEED);
 	}
 	if (mKeys[SDLK_UP]) {
-		NewRenderManager::GetInstance().mHero.y -= NewRenderManager::GetInstance().HERO_SPEED;
+		NewRenderManager::GetInstance().Set_mHero_y(-NewRenderManager::GetInstance().HERO_SPEED);
 	}
 	if (mKeys[SDLK_DOWN]) {
-		NewRenderManager::GetInstance().mHero.y += NewRenderManager::GetInstance().HERO_SPEED;
+		NewRenderManager::GetInstance().Set_mHero_y(NewRenderManager::GetInstance().HERO_SPEED);
 	}
 }
 
